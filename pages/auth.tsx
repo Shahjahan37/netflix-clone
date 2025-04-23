@@ -16,7 +16,7 @@ const Auth = () => {
 
   return (
     <div className="relative h-full w-full bg-[url('/images/hero.jpg')] bg-no-repeat bg-center bg-cover">
-      <div className="lg:bg-black/50 w-full h-full">
+      <div className="bg-black lg:bg-black/50 w-full h-full">
         <nav className="px-12 py-5">
           <img src="/images/logo.svg" alt="Logo" className="h-12" />
         </nav>
@@ -26,14 +26,16 @@ const Auth = () => {
               {variant === "login" ? "Sign in" : "Register"}
             </h2>
             <div className="flex flex-col gap-4">
-              <Input
-                id="name"
-                onChange={(event: any) => {
-                  setName(event.target.value);
-                }}
-                value={name}
-                label="Username"
-              />
+              {variant === "register" && (
+                <Input
+                  id="name"
+                  onChange={(event: any) => {
+                    setName(event.target.value);
+                  }}
+                  value={name}
+                  label="Username"
+                />
+              )}
               <Input
                 id="email"
                 onChange={(event: any) => {
@@ -54,15 +56,17 @@ const Auth = () => {
               />
             </div>
             <button className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">
-              Login
+              {variant === "login" ? "Login" : "Sign up"}
             </button>
             <p className="text-neutral-500 mt-12">
-              First time using Netflix?
+              {variant === "login"
+                ? "First time using Netflix?"
+                : "Already have an account?"}
               <span
                 onClick={toggleVariant}
                 className="text-white ml-1 hover:underline cursor-pointer"
               >
-                Sign up now
+                {variant === "login" ? "Create an account" : "Login now"}
               </span>
             </p>
           </div>
