@@ -12,15 +12,15 @@ export default async function handler(
 
     try {
         const { email, name, password } = req.body;
-        // console.log(req.body);
+        console.log(req.body);
 
         const existingUser = await prismadb.user.findUnique({
             where: {
-                email,
+                email: email,
             },
         });
 
-        // console.log('existingUser ', existingUser);
+        console.log('existingUser ', existingUser);
 
         if (existingUser) {
             return res.status(422).json({ error: "Email taken" });
