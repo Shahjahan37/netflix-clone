@@ -2,12 +2,10 @@ import axios from "axios";
 import Input from "@/components/input";
 import { useCallback, useState } from "react";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/router";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 
 const Auth = () => {
-  const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,15 +23,12 @@ const Auth = () => {
       await signIn("credentials", {
         email,
         password,
-        redirect: false,
-        callbackUrl: "/",
+        callbackUrl: "/profiles",
       });
-
-      router.push("/");
     } catch (error: any) {
       console.log("Login api error ", error.response);
     }
-  }, [email, password, router]);
+  }, [email, password]);
 
   const register = useCallback(async () => {
     try {
@@ -91,6 +86,7 @@ const Auth = () => {
               />
             </div>
             <button
+              aria-label={variant === "login" ? "Login" : "Sign up"}
               onClick={variant === "login" ? login : register}
               className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition"
             >
@@ -98,13 +94,29 @@ const Auth = () => {
             </button>
             <div className="flex flex-row items-center gap-4 mt-8 justify-center">
               <div
-                onClick={() => signIn("google", { callbackUrl: "/" })}
+                role="button"
+                aria-label="Sign in with Google"
+                tabIndex={0}
+                onClick={() => signIn("google", { callbackUrl: "/profiles" })}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    signIn("google", { callbackUrl: "/profiles" });
+                  }
+                }}
                 className="h-10 w-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition"
               >
                 <FcGoogle size={30} />
               </div>
               <div
-                onClick={() => signIn("github", { callbackUrl: "/" })}
+                role="button"
+                aria-label="Sign in with Github"
+                tabIndex={0}
+                onClick={() => signIn("github", { callbackUrl: "/profiles" })}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    signIn("github", { callbackUrl: "/profiles" });
+                  }
+                }}
                 className="h-10 w-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition"
               >
                 <FaGithub size={30} />

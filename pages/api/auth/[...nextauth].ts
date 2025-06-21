@@ -12,8 +12,8 @@ import prismadb from '@/lib/prismadb';
 export default NextAuth({
     providers: [
         GithubProvider({
-           clientId: process.env.GITHUB_ID as string,
-           clientSecret: process.env.GITHUB_SECRET as string,
+            clientId: process.env.GITHUB_ID as string,
+            clientSecret: process.env.GITHUB_SECRET as string,
         }),
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -27,8 +27,8 @@ export default NextAuth({
                 password: { label: "Password", type: "password" },
             },
             authorize: async (credentials) => {
-                console.log("Credentials ", credentials);
-                
+                // console.log("Credentials ", credentials);
+
                 if (!credentials?.email || !credentials?.password) {
                     throw new Error('Email and password required');
                 }
@@ -39,7 +39,7 @@ export default NextAuth({
                     }
                 });
 
-                console.log("user ", user);
+                // console.log("user ", user);
 
                 if (!user || !user?.hashPassword) {
                     throw new Error('Email does not exist');

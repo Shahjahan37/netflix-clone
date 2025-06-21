@@ -20,7 +20,7 @@ export default async function handler(
             },
         });
 
-        console.log('existingUser ', existingUser);
+        // console.log('existingUser ', existingUser);
 
         if (existingUser) {
             return res.status(422).json({ error: "Email taken" });
